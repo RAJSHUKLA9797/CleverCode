@@ -10,6 +10,7 @@ function App() {
   return (
     <Router>
       <Routes>
+<<<<<<< Updated upstream
         {/* Route for Home Page */}
         <Route path="/" element={<HomePage />} />  
         {/* Route for Username Form */}
@@ -17,6 +18,11 @@ function App() {
         {/* Route for User Details, includes username parameter */}
         <Route path="/user/:username" element={<UserDetails />} />
         </Routes>
+=======
+        <Route path="/" element={<HomePage />}></Route>
+        <Route path="user" element={<User />} />
+      </Routes>
+>>>>>>> Stashed changes
     </Router>
   );
 }
