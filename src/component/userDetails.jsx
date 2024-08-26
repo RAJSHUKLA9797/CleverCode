@@ -78,18 +78,26 @@ const UserDetails = () => {
       <img
         src="https://repository-images.githubusercontent.com/390296311/0f6c1240-462e-47ff-870d-e2d0ebb181f1"
         alt="Rectangular Image"
-        className="w-full h-24 object-cover"
+        className="w-full h-16 object-cover"
       />
 
-      <div className="mt-6 flex justify-center">
+      <div className="mt-2 flex justify-center">
         <img
           src={userDetails.avatar}
           alt="Circular Image"
           className="w-24 h-24 object-cover rounded-full border-4 border-white shadow-lg"
         />
       </div>
-
-      <div className="p-6">
+      <div className="flex flex-col justify-center items-center">
+        <h3 className="text-lg font-medium underline">{fullName}</h3>
+        <h1 className="text-gray-600">{userDetails.rating}</h1>
+      </div>
+      <div className="flex flex-col justify-center items-center mt-2">
+        <h3 className="text-sm font-light">
+          {userDetails.organization}, {userDetails.country}
+        </h3>
+      </div>
+      <div className="p-4">
         <div className="flex justify-between text-center">
           <div>
             <h3 className="text-lg font-medium">Rating</h3>
@@ -101,7 +109,8 @@ const UserDetails = () => {
           </div>
           <div>
             <h3 className="text-lg font-medium">Problems</h3>
-            <p className="text-gray-600">{solvedCount}</p> {/* Display solved problems count */}
+            <p className="text-gray-600">{solvedCount}</p>{" "}
+            {/* Display solved problems count */}
           </div>
         </div>
       </div>
