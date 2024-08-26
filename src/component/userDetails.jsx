@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Tags from "./tags";
+import { UserProfileColor } from "./UserProfileColor";
 
 const UserDetails = () => {
   const { username } = useParams();
@@ -9,13 +10,15 @@ const UserDetails = () => {
   const [userDetails, setUserDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [solvedCount, setSolvedCount] = useState(0);  // New state for problem count
+  const [solvedCount, setSolvedCount] = useState(0); // New state for problem count
 
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
         // Fetch user info
-        const userResponse = await fetch(`https://codeforces.com/api/user.info?handles=${username}`);
+        const userResponse = await fetch(
+          `https://codeforces.com/api/user.info?handles=${username}`
+        );
         const userData = await userResponse.json();
 
         if (userData.status === "OK") {
@@ -26,16 +29,18 @@ const UserDetails = () => {
             `https://codeforces.com/api/user.status?handle=${username}&from=1&count=10000`
           );
           const solvedProblems = submissionsResponse.data.result
-            .filter(submission => submission.verdict === 'OK')
-            .map(submission => submission.problem.name);
-          
+            .filter((submission) => submission.verdict === "OK")
+            .map((submission) => submission.problem.name);
+
           // Set the count of unique solved problems
           setSolvedCount([...new Set(solvedProblems)].length);
         } else {
           throw new Error("User not found");
         }
       } catch (err) {
-        setError(err.message || "An error occurred while fetching user details");
+        setError(
+          err.message || "An error occurred while fetching user details"
+        );
         setTimeout(() => {
           navigate("/user");
         }, 2000);
@@ -49,8 +54,11 @@ const UserDetails = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        Loading...
+      <div className="flex items-center justify-center h-screen">
+        <div className="relative">
+          <div className="h-24 w-24 rounded-full border-t-8 border-b-8 border-gray-200"></div>
+          <div className="absolute top-0 left-0 h-24 w-24 rounded-full border-t-8 border-b-8 border-blue-600 animate-spin"></div>
+        </div>
       </div>
     );
   }
@@ -71,7 +79,9 @@ const UserDetails = () => {
     );
   }
 
-  const fullName = `${userDetails.firstName || ""} ${userDetails.lastName || ""}`.trim();
+  const fullName = `${userDetails.firstName || ""} ${
+    userDetails.lastName || ""
+  }`.trim();
 
   return (
     <div className="max-w-sm mx-auto bg-white shadow-lg rounded-lg overflow-hidden m-20">
@@ -90,15 +100,20 @@ const UserDetails = () => {
       </div>
       <div className="flex flex-col justify-center items-center">
         <h3 className="text-lg font-medium underline">{fullName}</h3>
-        <h1 className="text-gray-600">{userDetails.rating}</h1>
+        <h1 className={UserProfileColor(userDetails.rank)}>
+          {userDetails.rank}
+        </h1>
       </div>
       <div className="flex flex-col justify-center items-center mt-2">
         <h3 className="text-sm font-light">
           {userDetails.organization}, {userDetails.country}
         </h3>
       </div>
-      <div className="p-4">
-        <div className="flex justify-between text-center">
+      <div className="py-4">
+        <hr className="border-t border-gray-300 w-full" />
+      </div>
+      <div>
+        <div className="flex justify-between text-center px-4">
           <div>
             <h3 className="text-lg font-medium">Rating</h3>
             <p className="text-gray-600">{userDetails.rating}</p>
