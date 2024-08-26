@@ -28,7 +28,7 @@ const HomePage = () => {
             <h1 className="text-center mb-3 text-xl font-bold">
               --- About CleverCode ---
             </h1>
-            <p className="text-gray-700 text-sm text-center font-semibold font-lato">
+            <p className="text-gray-700 text-base text-center font-semibold font-lato ">
               CleverCode is an indispensable tool developed to assist fellow
               coders who want to be better at competitive programming, have
               their Codeforces account set up and ready to use but don't have a
@@ -43,7 +43,7 @@ const HomePage = () => {
             <h1 className="text-center mb-3 text-xl font-bold">
               --- Steps to use ---
             </h1>
-            <ul className="text-gray-700 text-sm text-left list-disc pl-4 font-lato font-semibold">
+            <ul className="text-gray-700 text-base text-left list-disc pl-4 font-lato font-semibold">
               <li className="mb-1">
                 Enter the Codeforces handle/username of the person you want to
                 view the solved problems of.
