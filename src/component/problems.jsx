@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import axiosRetry from "axios-retry";
 import ProblemCard from "./problemcard";
 import { useParams } from "react-router-dom";
-
-// Configure axios-retry
-axiosRetry(axios, { retries: 3 });
 
 const Problems = () => {
   const { username, tag } = useParams();
@@ -17,13 +13,13 @@ const Problems = () => {
     const fetchProblemsByTag = async () => {
       try {
         // Fetch user submissions
-        const response = await axios.get(
+        const submissionsResponse = await axios.get(
           `https://codeforces.com/api/user.status?handle=${username}&from=1&count=10000`
         );
-        console.log("API Response:", response.data);
+        console.log("Submissions Response:", submissionsResponse.data);
 
-        // Extract problem details
-        const problemsData = response.data.result
+        // Extract problem details from submissions
+        const problemsData = submissionsResponse.data.result
           .filter(
             (submission) =>
               submission.verdict === "OK" &&
@@ -43,24 +39,22 @@ const Problems = () => {
           ).values()
         );
 
-        // Fetch problem details to get difficulty
-        const problemDetailsPromises = uniqueProblems.map(async (problem) => {
-          try {
-            const detailsResponse = await axios.get(
-              `https://codeforces.com/api/problemset.problem?contestId=${problem.contestId}&index=${problem.index}`
-            );
-            const problemDetail = detailsResponse.data.result;
-            return {
-              ...problem,
-              difficulty: problemDetail.rating || "Not Rated"
-            };
-          } catch (err) {
-            console.error("Error fetching problem details:", err);
-            return { ...problem, difficulty: "Not Rated" };
-          }
-        });
+        // Fetch all problems to get difficulty
+        const problemDetailsResponse = await axios.get(
+          `https://codeforces.com/api/problemset.problems`
+        );
+        const problemsList = problemDetailsResponse.data.result.problems;
 
-        const detailedProblems = await Promise.all(problemDetailsPromises);
+        // Map the fetched problems to their details
+        const detailedProblems = uniqueProblems.map(problem => {
+          const problemDetail = problemsList.find(
+            p => p.contestId === problem.contestId && p.index === problem.index
+          );
+          return {
+            ...problem,
+            difficulty: problemDetail ? problemDetail.rating || "Not Rated" : "Not Rated"
+          };
+        });
 
         // Sort problems by difficulty (ascending)
         detailedProblems.sort((a, b) => {
