@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Tags from "./tags";
 import { UserProfileColor } from "./UserProfileColor";
+import Loader from "./loader";
 
 const UserDetails = () => {
   const { username } = useParams();
@@ -53,14 +54,7 @@ const UserDetails = () => {
   }, [username, navigate]);
 
   if (loading) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <div className="relative">
-          <div className="h-24 w-24 rounded-full border-t-8 border-b-8 border-gray-200"></div>
-          <div className="absolute top-0 left-0 h-24 w-24 rounded-full border-t-8 border-b-8 border-blue-600 animate-spin"></div>
-        </div>
-      </div>
-    );
+    return <Loader />;
   }
 
   if (error) {
