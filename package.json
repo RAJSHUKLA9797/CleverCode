@@ -1,6 +1,7 @@
 {
   "name": "clevercode",
   "private": true,
+  "main":"index.js",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
