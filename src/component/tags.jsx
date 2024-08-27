@@ -70,7 +70,7 @@ export default function Tags({ username }) {
         ))}
       </MenuItems>
       <button
-        className="mt-4 w-full bg-customGreen text-white p-2 rounded hover:bg-blue-600"
+        className="mt-4 w-full hover:bg-customGreen text-white p-2 rounded bg-blue-600"
         onClick={handleApply}
         disabled={!selectedTag}
       >

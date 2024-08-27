@@ -3,12 +3,14 @@ import axios from "axios";
 import ProblemCard from "./problemcard";
 import { useParams } from "react-router-dom";
 import Loader from "./loader";
+import Navbar from "./navbar";
 
 const Problems = () => {
   const { username, tag } = useParams();
   const [problems, setProblems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [mySolvedProblems, setMySolvedProblems] = useState([]);
 
   useEffect(() => {
     const fetchProblemsByTag = async () => {
@@ -17,7 +19,6 @@ const Problems = () => {
         const submissionsResponse = await axios.get(
           `https://codeforces.com/api/user.status?handle=${username}&from=1&count=10000`
         );
-        console.log("Submissions Response:", submissionsResponse.data);
 
         // Extract problem details from submissions
         const problemsData = submissionsResponse.data.result
@@ -84,11 +85,24 @@ const Problems = () => {
     fetchProblemsByTag();
   }, [username, tag]);
 
-  //loader   
+  const handleCompare = async (myUsername) => {
+    try {
+      const mySubmissionsResponse = await axios.get(
+        `https://codeforces.com/api/user.status?handle=${myUsername}&from=1&count=10000`
+      );
+
+      const mySolved = mySubmissionsResponse.data.result
+        .filter((submission) => submission.verdict === "OK")
+        .map((submission) => `${submission.problem.contestId}-${submission.problem.index}`);
+
+      setMySolvedProblems(mySolved);
+    } catch (error) {
+      console.error("Error fetching your solved problems:", error);
+    }
+  };
+
   if (loading) {
-    return (
-      <Loader/>
-    );
+    return <Loader />;
   }
 
   if (error) {
@@ -100,23 +114,27 @@ const Problems = () => {
   }
 
   return (
-    <div className="p-6">
-      <h2 className="text-lg font-medium mb-4 text-center">
-        Solved Problems - {tag}
-      </h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {problems.length > 0 ? (
-          problems.map((problem, index) => (
-            <ProblemCard
-              key={index}
-              name={problem.name}
-              difficulty={problem.difficulty}
-              url={problem.url}
-            />
-          ))
-        ) : (
-          <p>No problems found for the selected tag.</p>
-        )}
+    <div>
+      <Navbar username={username} onCompare={handleCompare} />
+      <div className="p-6">
+        <h2 className="text-lg font-medium mb-4 text-center">
+          Solved Problems - {tag}
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {problems.length > 0 ? (
+            problems.map((problem, index) => (
+              <ProblemCard
+                key={index}
+                name={problem.name}
+                difficulty={problem.difficulty}
+                url={problem.url}
+                isSolvedByMe={mySolvedProblems.includes(`${problem.contestId}-${problem.index}`)}
+              />
+            ))
+          ) : (
+            <p>No problems found for the selected tag.</p>
+          )}
+        </div>
       </div>
     </div>
   );

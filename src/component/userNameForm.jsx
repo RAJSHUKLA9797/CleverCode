@@ -43,7 +43,7 @@ const UsernameForm = () => {
         />
         <button
           type="submit"
-          className="w-full bg-customGreen hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className="w-full hover:bg-customGreen bg-blue-600 text-white font-bold py-2 px-4 rounded"
         >
           Submit
         </button>
