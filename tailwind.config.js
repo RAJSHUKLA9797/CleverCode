@@ -5,6 +5,8 @@ export default {
     extend: {
       fontFamily: {
         lato: ["Lato", "sans-serif"], // Add the Lato font here
+        Roboto:["Roboto","sans-serif"],
+        Raleway:["Raleway","sans-serif"]
       },
       colors: {
         customGreen: "#24c5a1",

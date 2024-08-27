@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
+@layer base {
+  html {
+    @apply font-Raleway;
+  }
+}
 @tailwind utilities;
