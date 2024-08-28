@@ -1,6 +1,7 @@
 {
   "name": "clevercode",
   "private": true,
+  "main": "index.js",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
@@ -14,6 +15,7 @@
     "@material-tailwind/react": "^2.1.9",
     "axios": "^1.7.5",
     "axios-retry": "^4.5.0",
+    "live-server": "^1.2.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
