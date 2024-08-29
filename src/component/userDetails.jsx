@@ -7,6 +7,7 @@ import Loader from "./loader";
 
 const UserDetails = () => {
   const { username } = useParams();
+ 
   const navigate = useNavigate();
   const [userDetails, setUserDetails] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -20,6 +21,7 @@ const UserDetails = () => {
         const userResponse = await fetch(
           `https://codeforces.com/api/user.info?handles=${username}`
         );
+           {console.log(username)}
         const userData = await userResponse.json();
 
         if (userData.status === "OK") {
