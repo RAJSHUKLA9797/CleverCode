@@ -21,7 +21,7 @@ const UserDetails = () => {
         const userResponse = await fetch(
           `https://codeforces.com/api/user.info?handles=${username}`
         );
-           {console.log(username)}
+          //  {console.log(username)}
         const userData = await userResponse.json();
 
         if (userData.status === "OK") {

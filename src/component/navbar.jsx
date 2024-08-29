@@ -6,7 +6,7 @@ const Navbar = ({ username, onCompare }) => {
   const handleCompare = () => {
     if (myUsername.trim()) {
       onCompare(myUsername);
-      {console.log(`${username} compared with ${myUsername}`)}
+      // {console.log(`${username} compared with ${myUsername}`)}
     }
   };
 
