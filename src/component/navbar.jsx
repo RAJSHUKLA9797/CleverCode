@@ -6,6 +6,7 @@ const Navbar = ({ username, onCompare }) => {
   const handleCompare = () => {
     if (myUsername.trim()) {
       onCompare(myUsername);
+      // {console.log(`${username} compared with ${myUsername}`)}
     }
   };
 
@@ -22,6 +23,7 @@ const Navbar = ({ username, onCompare }) => {
           placeholder="Enter your username"
           className="p-2 rounded bg-gray-200 text-gray-800 w-3/5 md:w-auto mr-2"
         />
+        
         <button
           onClick={handleCompare}
           className="p-2 bg-customgreen text-white rounded w-2/5 md:w-auto"
