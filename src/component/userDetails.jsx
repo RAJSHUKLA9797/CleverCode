@@ -7,27 +7,23 @@ import Loader from "./loader";
 
 const UserDetails = () => {
   const { username } = useParams();
- 
   const navigate = useNavigate();
   const [userDetails, setUserDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [solvedCount, setSolvedCount] = useState(0); // New state for problem count
+  const [solvedCount, setSolvedCount] = useState(0);
 
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
-        // Fetch user info
         const userResponse = await fetch(
           `https://codeforces.com/api/user.info?handles=${username}`
         );
-          //  {console.log(username)}
         const userData = await userResponse.json();
 
         if (userData.status === "OK") {
           setUserDetails(userData.result[0]);
 
-          // Fetch the user's submissions to count solved problems
           const submissionsResponse = await axios.get(
             `https://codeforces.com/api/user.status?handle=${username}&from=1&count=10000`
           );
@@ -35,7 +31,6 @@ const UserDetails = () => {
             .filter((submission) => submission.verdict === "OK")
             .map((submission) => submission.problem.name);
 
-          // Set the count of unique solved problems
           setSolvedCount([...new Set(solvedProblems)].length);
         } else {
           throw new Error("User not found");
@@ -54,6 +49,10 @@ const UserDetails = () => {
 
     fetchUserDetails();
   }, [username, navigate]);
+
+  const handleYearWrapped = () => {
+    navigate("/wrapped", { state: { username } });
+  };
 
   if (loading) {
     return <Loader />;
@@ -120,13 +119,20 @@ const UserDetails = () => {
           </div>
           <div>
             <h3 className="text-lg font-medium">Problems</h3>
-            <p className="text-gray-600">{solvedCount}</p>{" "}
-            {/* Display solved problems count */}
+            <p className="text-gray-600">{solvedCount}</p>
           </div>
         </div>
       </div>
 
       <Tags username={username} />
+      <div className="text-center mt-1">
+        <button
+          className="px-4 py-2 m-2 hover:bg-customGreen bg-blue-600 text-white rounded"
+          onClick={handleYearWrapped}
+        >
+          Year Wrapped
+        </button>
+      </div>
     </div>
   );
 };
