@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Chart from "chart.js/auto";
 import ProblemCard from "./problemcard";
 import Loader from "./loader";
-import Navbar from "./Navbar";
+import Navbar from "./navbar";
 
 const Wrapped = () => {
   const location = useLocation();
