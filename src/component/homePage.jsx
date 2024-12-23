@@ -75,18 +75,18 @@ const HomePage = () => {
           </div>
         </div>
       </div>
-      <div className="absolute bottom-4 right-4 flex space-x-2">
-        <p className="text-sm text-gray-600">
+      <div className="absolute bottom-2 right-2 flex space-x-2">
+        <div className="text-sm text-gray-600 justify-center font-bold">
           Owner :{" "}
-          <a
+          <div
             href="https://rishavrajj3225.github.io/Portfolio/"
             target="_blank"
             rel="noopener noreferrer"
             className="text-sm text-blue-600 hover:text-customGreen"
           >
             Rishu Raj{" "}
-          </a>
-          <span className="text-sm text-gray-600">&amp;</span>
+          </div>
+          <span className="text-sm text-gray-600"></span>
           <a
             href="https://github.com/RAJSHUKLA9797"
             target="_blank"
@@ -95,7 +95,7 @@ const HomePage = () => {
           >
            {" "} Raj Shukla
           </a>
-        </p>
+        </div>
       </div>
     </div>
   );
