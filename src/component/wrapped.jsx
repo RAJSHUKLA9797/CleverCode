@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Chart from "chart.js/auto";
 import ProblemCard from "./problemcard";
 import Loader from "./loader";
+import Navbar from "./Navbar";
 
 const Wrapped = () => {
   const location = useLocation();
@@ -20,8 +21,9 @@ const Wrapped = () => {
       return;
     }
 
-    const fetchUserInfo = async () => {
+    const fetchUserData = async () => {
       try {
+        // Fetch User Info
         const userResponse = await fetch(
           `https://codeforces.com/api/user.info?handles=${username}`
         );
@@ -32,14 +34,6 @@ const Wrapped = () => {
         } else {
           throw new Error("Failed to fetch user info");
         }
-      } catch (err) {
-        console.error("Error fetching user info:", err);
-        setError("Failed to fetch user info. Please try again later.");
-      }
-    };
-
-    const fetchProblemStats = async () => {
-      try {
         const problemResponse = await fetch(
           `https://codeforces.com/api/user.status?handle=${username}&from=1&count=10000`
         );
@@ -58,7 +52,6 @@ const Wrapped = () => {
                 url: `https://codeforces.com/contest/${submission.contestId}/problem/${submission.problem.index}`,
               };
 
-              // Check if the problem was solved this year
               const submissionDate = new Date(
                 submission.creationTimeSeconds * 1000
               );
@@ -86,9 +79,7 @@ const Wrapped = () => {
                 topTags.map((t) => t.name).includes(tag)
               )
             )
-            .sort(([, a], [, b]) => {
-              return (b.difficulty || 0) - (a.difficulty || 0);
-            })
+            .sort(([, a], [, b]) => (b.difficulty || 0) - (a.difficulty || 0))
             .slice(0, 5)
             .map(([name, problem]) => ({
               name,
@@ -105,13 +96,12 @@ const Wrapped = () => {
           throw new Error("Failed to fetch problem stats");
         }
       } catch (err) {
-        console.error("Error fetching problem stats:", err);
-        setError("Failed to fetch problem stats. Please try again later.");
+        console.error("Error fetching data:", err);
+        setError("Failed to fetch data. Please try again later.");
       }
     };
 
-    fetchUserInfo();
-    fetchProblemStats();
+    fetchUserData();
   }, [username, navigate]);
 
   useEffect(() => {
@@ -163,115 +153,106 @@ const Wrapped = () => {
   }
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h1 style={{ textAlign: "center", marginBottom: "20px" }}>
-        {`${username}'s 2024 Wrapped`}
-      </h1>
+    <>
+      <Navbar /> 
+      <div style={{ padding: "20px" }}>
+        <h1 style={{ textAlign: "center", marginBottom: "20px" }}>
+          {`${username}'s 2024 Wrapped`}
+        </h1>
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-          gap: "20px",
-        }}
-      >
         <div
           style={{
-            background: "#f5f5f5",
-            borderRadius: "10px",
-            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-            padding: "20px",
-            textAlign: "center",
-            transition: "transform 0.3s ease",
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+            gap: "20px",
           }}
-          onMouseEnter={(e) => (e.target.style.transform = "scale(1.05)")}
-          onMouseLeave={(e) => (e.target.style.transform = "scale(1)")}
         >
-          <h2 className="text-lg font-bold" style={{ marginBottom: "20px" }}>
-            User Info
-          </h2>
           <div
             style={{
-              display: "flex",
-              justifyContent: "center",
-              marginBottom: "15px",
+              background: "#f5f5f5",
+              borderRadius: "10px",
+              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+              padding: "20px",
+              textAlign: "center",
             }}
           >
-            <img
-              src={userInfo.avatar}
-              alt="Profile"
+            <h2 className="text-lg font-bold" style={{ marginBottom: "20px" }}>
+              User Info
+            </h2>
+            <div
               style={{
-                width: "200px",
-                height: "200px",
-                objectFit: "cover",
-                borderRadius: "10px",
-                boxShadow: "0 4px 10px rgba(0, 0, 0, 0.2)",
+                display: "flex",
+                justifyContent: "center",
+                marginBottom: "15px",
               }}
-            />
-          </div>
-          <div
-            className="flex justify-between text-center px-4"
-            style={{ marginBottom: "10px" }}
-          >
-            <div>
-              <h3 className="text-lg font-bold">Handle:</h3>
-              <p className="text-gray-600">{userInfo.handle}</p>
+            >
+              <img
+                src={userInfo.avatar}
+                alt="Profile"
+                style={{
+                  width: "200px",
+                  height: "200px",
+                  objectFit: "cover",
+                  borderRadius: "10px",
+                  boxShadow: "0 4px 10px rgba(0, 0, 0, 0.2)",
+                }}
+              />
             </div>
+            <div
+              className="flex justify-between text-center px-4"
+              style={{ marginBottom: "10px" }}
+            >
+              <div>
+                <h3 className="text-lg font-bold">Handle:</h3>
+                <p className="text-gray-600">{userInfo.handle}</p>
+              </div>
 
-            <div>
-              <h3 className="text-lg font-bold">Rank:</h3>
-              <p className="text-gray-600">{userInfo.rank}</p>
-            </div>
+              <div>
+                <h3 className="text-lg font-bold">Rank:</h3>
+                <p className="text-gray-600">{userInfo.rank}</p>
+              </div>
 
-            <div>
-              <h3 className="text-lg font-bold">Rating:</h3>
-              <p className="text-gray-600">{userInfo.rating}</p>
+              <div>
+                <h3 className="text-lg font-bold">Rating:</h3>
+                <p className="text-gray-600">{userInfo.rating}</p>
+              </div>
             </div>
+            <p>
+              <strong>Max Rating:</strong> {userInfo.maxRating} (
+              {userInfo.maxRank})
+            </p>
+            <p>
+              <strong>Total Problems Solved This Year:</strong>{" "}
+              {problemStats.totalSolvedThisYear}
+            </p>
           </div>
-          <p>
-            <strong>Max Rating:</strong> {userInfo.maxRating} (
-            {userInfo.maxRank})
-          </p>
-          <p>
-            <strong>Total Problems Solved This Year:</strong>{" "}
-            {problemStats.totalSolvedThisYear}
-          </p>
+
+          <div>
+            <h2>Top Tags</h2>
+            <canvas id="topTagsChart" />
+          </div>
         </div>
 
+        <h2 style={{ textAlign: "center", marginTop: "30px" }}>Top Rated Problems Solved</h2>
         <div
           style={{
-            background: "#f5f5f5",
-            borderRadius: "10px",
-            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-            padding: "20px",
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+            gap: "20px",
           }}
         >
-          <h2>Top Tags Practiced</h2>
-          <canvas id="topTagsChart" />
+          {problemStats.topProblems.map((problem, index) => (
+            <ProblemCard
+              key={index}
+              name={problem.name}
+              difficulty={problem.difficulty || "Unrated"}
+              tags={problem.tags}
+              url={problem.url}
+            />
+          ))}
         </div>
       </div>
-
-      <h2 style={{ textAlign: "center", marginTop: "30px" }}>
-        Top Problems based on Rating
-      </h2>
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-          gap: "20px",
-        }}
-      >
-        {problemStats.topProblems.map((problem, index) => (
-          <ProblemCard
-            key={index}
-            name={problem.name}
-            difficulty={problem.difficulty || "Unrated"}
-            url={problem.url}
-            isSolvedByMe={true}
-          />
-        ))}
-      </div>
-    </div>
+    </>
   );
 };
 
