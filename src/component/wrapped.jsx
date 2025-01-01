@@ -12,7 +12,7 @@ const Wrapped = () => {
   const [userInfo, setUserInfo] = useState(null);
   const [problemStats, setProblemStats] = useState(null);
   const [error, setError] = useState(null);
-  const chartRef = useRef(null);
+  const [year, setYear] = useState(new Date().getFullYear());
 
   useEffect(() => {
     if (!username) {
@@ -34,6 +34,7 @@ const Wrapped = () => {
         } else {
           throw new Error("Failed to fetch user info");
         }
+
         const problemResponse = await fetch(
           `https://codeforces.com/api/user.status?handle=${username}&from=1&count=10000`
         );
@@ -41,31 +42,27 @@ const Wrapped = () => {
 
         if (problemData.status === "OK") {
           const solvedProblems = {};
-          const solvedThisYear = new Set();
-          const currentYear = new Date().getFullYear();
+          const tagsCount = {};
 
           problemData.result.forEach((submission) => {
-            if (submission.verdict === "OK") {
+            const submissionDate = new Date(
+              submission.creationTimeSeconds * 1000
+            );
+
+            if (
+              submission.verdict === "OK" &&
+              submissionDate.getFullYear() === year
+            ) {
               solvedProblems[submission.problem.name] = {
                 tags: submission.problem.tags,
                 difficulty: submission.problem.rating,
                 url: `https://codeforces.com/contest/${submission.contestId}/problem/${submission.problem.index}`,
               };
 
-              const submissionDate = new Date(
-                submission.creationTimeSeconds * 1000
-              );
-              if (submissionDate.getFullYear() === currentYear) {
-                solvedThisYear.add(submission.problem.name);
-              }
+              submission.problem.tags.forEach((tag) => {
+                tagsCount[tag] = (tagsCount[tag] || 0) + 1;
+              });
             }
-          });
-
-          const tagsCount = {};
-          Object.values(solvedProblems).forEach((problem) => {
-            problem.tags.forEach((tag) => {
-              tagsCount[tag] = (tagsCount[tag] || 0) + 1;
-            });
           });
 
           const topTags = Object.entries(tagsCount)
@@ -88,7 +85,6 @@ const Wrapped = () => {
 
           setProblemStats({
             totalSolved: Object.keys(solvedProblems).length,
-            totalSolvedThisYear: solvedThisYear.size,
             topTags,
             topProblems,
           });
@@ -102,7 +98,7 @@ const Wrapped = () => {
     };
 
     fetchUserData();
-  }, [username, navigate]);
+  }, [username, year, navigate]);
 
   useEffect(() => {
     let chartInstance = null;
@@ -152,13 +148,40 @@ const Wrapped = () => {
     return <Loader />;
   }
 
+  // Calculate start year for dropdown
+  const startYear = new Date(
+    userInfo.registrationTimeSeconds * 1000
+  ).getFullYear();
+  const currentYear = new Date().getFullYear();
+  const years = Array.from(
+    { length: currentYear - startYear + 1 },
+    (_, i) => startYear + i
+  );
+
   return (
     <>
-      <Navbar /> 
+      <Navbar />
       <div style={{ padding: "20px" }}>
         <h1 style={{ textAlign: "center", marginBottom: "20px" }}>
-          {`${username}'s 2024 Wrapped`}
+          {`${username}'s ${year} Wrapped`}
         </h1>
+
+        <div style={{ textAlign: "center", marginBottom: "20px" }}>
+          <label htmlFor="year-select" style={{ marginRight: "10px" }}>
+            Select Year:
+          </label>
+          <select
+            id="year-select"
+            value={year}
+            onChange={(e) => setYear(Number(e.target.value))}
+          >
+            {years.map((yr) => (
+              <option key={yr} value={yr}>
+                {yr}
+              </option>
+            ))}
+          </select>
+        </div>
 
         <div
           style={{
@@ -223,17 +246,19 @@ const Wrapped = () => {
             </p>
             <p>
               <strong>Total Problems Solved This Year:</strong>{" "}
-              {problemStats.totalSolvedThisYear}
+              {problemStats.totalSolved}
             </p>
           </div>
 
           <div>
-            <h2>Top Tags</h2>
+            <h2>Top Tags This Year</h2>
             <canvas id="topTagsChart" />
           </div>
         </div>
 
-        <h2 style={{ textAlign: "center", marginTop: "30px" }}>Top Rated Problems Solved</h2>
+        <h2 style={{ textAlign: "center", marginTop: "30px" }}>
+          Top Rated Problems Solved
+        </h2>
         <div
           style={{
             display: "grid",
