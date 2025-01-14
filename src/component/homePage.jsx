@@ -75,31 +75,6 @@ const HomePage = () => {
           </div>
         </div>
       </div>
-      <div className="absolute bottom-2 right-2 flex space-x-2">
-        <div className="text-sm text-gray-600 justify-center font-bold">
-          Owner :{" "}
-          <div>
-            <a
-              href="https://rishavrajj3225.github.io/Portfolio/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm text-blue-600 hover:text-customGreen"
-            >
-              Rishu Raj{" "}
-            </a>
-          </div>
-          <span className="text-sm text-gray-600"></span>
-          <a
-            href="https://github.com/RAJSHUKLA9797"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm text-blue-600 hover:text-customGreen"
-          >
-            {" "}
-            Raj Shukla
-          </a>
-        </div>
-      </div>
     </div>
   );
 };
