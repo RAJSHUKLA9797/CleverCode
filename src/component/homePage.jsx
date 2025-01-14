@@ -8,7 +8,7 @@ const HomePage = () => {
   };
 
   return (
-    <div className="grid grid-cols-1 divide-y">
+    <div className="grid grid-cols-1 divide-y relative">
       <div className="flex items-center justify-center min-h-screen bg-gray-100">
         <div className="max-w-lg rounded overflow-hidden shadow-lg bg-white">
           <img
@@ -28,7 +28,7 @@ const HomePage = () => {
             <h1 className="text-center mb-3 text-xl font-bold">
               --- About CleverCode ---
             </h1>
-            <p className="text-gray-700 text-base text-center font-medium   ">
+            <p className="text-gray-700 text-base text-center font-medium">
               CleverCode is an indispensable tool developed to assist fellow
               coders who want to be better at competitive programming, have
               their Codeforces account set up and ready to use but don't have a
@@ -43,7 +43,7 @@ const HomePage = () => {
             <h1 className="text-center mb-3 text-xl font-bold">
               --- Steps to use ---
             </h1>
-            <ul className="text-gray-700 text-base text-left list-disc pl-4   font-medium">
+            <ul className="text-gray-700 text-base text-left list-disc pl-4 font-medium">
               <li className="mb-1">
                 Enter the Codeforces handle/username of the person you want to
                 view the solved problems of.
