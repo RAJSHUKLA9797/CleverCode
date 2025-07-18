@@ -132,6 +132,12 @@ const UserDetails = () => {
         >
           Year Wrapped
         </button>
+        <button
+          className="px-4 py-2 m-2 hover:bg-customGreen bg-blue-600 text-white rounded"
+          onClick={() => navigate(`/user/${username}/recommendations`)}
+        >
+          Performance 
+        </button>
       </div>
     </div>
   );

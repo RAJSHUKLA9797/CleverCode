@@ -6,7 +6,7 @@ import UsernameForm from "./component/userNameForm";
 import UserDetails from "./component/userDetails";
 import Problems from "./component/problems";
 import Wrapped from "./component/wrapped";
-
+import SmartRecommendations from "./component/SmartRecommendations";
 function App() {
   return (
     <Router>
@@ -18,6 +18,10 @@ function App() {
         <Route path="/user/:username" element={<UserDetails />} />
         <Route path="/problems/:username/:tag" element={<Problems />} />
         <Route path="/wrapped" element={<Wrapped />} />
+        <Route
+          path="/user/:handle/recommendations"
+          element={<SmartRecommendations />}
+        />
       </Routes>
     </Router>
   );
