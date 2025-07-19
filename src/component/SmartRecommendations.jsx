@@ -180,76 +180,75 @@ const SmartRecommendations = () => {
               const isSelected = selectedTags.includes(tag);
               return (
                 <button
-                  key={tag}
-                  onClick={() =>
+                    key={tag}
+                    onClick={() =>
                     setSelectedTags((prev) =>
-                      prev.includes(tag)
+                        prev.includes(tag)
                         ? prev.filter((t) => t !== tag)
                         : [...prev, tag]
                     )
-                  }
-                  className={`px-3 py-1 rounded-full text-sm font-medium border ${
+                    }
+                    className={`px-3 py-1 rounded-full text-sm font-medium border ${
                     isSelected
-                      ? "bg-blue-500 text-white border-blue-500"
-                      : "bg-blue-100 text-blue-700 border-blue-300"
-                  }`}
+                        ? "bg-blue-500 text-white border-blue-500"
+                        : "bg-blue-100 text-blue-700 border-blue-300"
+                    }`}
                 >
-                  #{tag}
+                    #{tag}
                 </button>
-              );
+                );
             })}
-          </div>
+            </div>
         </div>
-      )}
+        )}
 
-      <h2 className="text-3xl font-semibold text-gray-800 mb-6">
+        <h2 className="text-3xl font-semibold text-gray-800 mb-6">
         Problem Recommendations
-      </h2>
-      <div className="flex items-center gap-2">
+        </h2>
+        <div className="flex items-center gap-2">
         <label className="text-base font-medium text-gray-700">
-          Problem Count:
+            Problem Count:
         </label>
         <input
-          type="number"
-          min="1"
-          max="100"
-          step={1}
-          value={suggestedCount[0]}
-          onChange={(e) => {
+            type="number"
+            min="1"
+            max="100"
+            step={1}
+            value={suggestedCount[0]}
+            onChange={(e) => {
             const value = e.target.value;
             if (value === "") {
-              setSuggestedCount(["", suggestedCount[1]]);
+                setSuggestedCount(["", suggestedCount[1]]);
             } else {
-              setSuggestedCount([+e.target.value, suggestedCount[0]]);
+                setSuggestedCount([+e.target.value, suggestedCount[0]]);
             }
-          }}
-          className="w-24 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            }}
+            className="w-24 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
-      </div>
-      {loading && <p className="text-gray-600">Loading recommendations...</p>}
-
-      {error && <p className="text-red-600 font-semibold">{error}</p>}
-
-      {!loading && !error && recommended.length === 0 && (
-        <div className="p-4 border border-dashed border-gray-300 rounded-lg bg-gray-50 text-gray-600">
-          No recommendations found in this range. Try to adjust the difficulty
-          or solve more problems to generate weak tags.
         </div>
-      )}
+        {loading && <p className="text-gray-600">Loading recommendations...</p>}
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6 mt-4">
+        {error && <p className="text-red-600 font-semibold">{error}</p>}
+
+        {!loading && !error && recommended.length === 0 && (
+        <div className="p-4 border border-dashed border-gray-300 rounded-lg bg-gray-50 text-gray-600">
+            No recommendations found in this range. Try to adjust the difficulty or solve more problems to generate weak tags.
+        </div>
+        )}
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6 mt-4">
         {recommended.map((problem) => (
-          <ProblemCard
+        <ProblemCard
             key={`${problem.contestId}-${problem.index}`}
             name={problem.name}
             difficulty={problem.rating}
             url={`https://codeforces.com/contest/${problem.contestId}/problem/${problem.index}`}
             isSolvedByMe={false} // Assuming we don't have solved status here
-          />
+        />
         ))}
-      </div>
+        </div>
     </div>
-  );
+    );    
 };
 
 export default SmartRecommendations;
