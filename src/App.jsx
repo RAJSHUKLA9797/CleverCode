@@ -7,7 +7,7 @@ import UserDetails from "./pages/userDetails";
 import Problems from "./pages/problems";
 import Wrapped from "./pages/wrapped";
 import SmartRecommendations from "./pages/SmartRecommendations";
-import TopicMastery from "./Pages/TopicMastery";
+import TopicMastery from "./pages/TopicMastery";
 function App() {
   return (
     <Router>
