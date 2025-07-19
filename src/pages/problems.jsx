@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import ProblemCard from "./problemcard";
+import ProblemCard from "../components/problemcard";
 import { useParams } from "react-router-dom";
-import Loader from "./loader";
-import Navbar from "./navbar";
+import Loader from "../components/loader";
+import Navbar from "../components/navbar";
 
 const Problems = () => {
   const { username, tag } = useParams();

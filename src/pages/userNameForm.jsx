@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import CustomButton from "../components/CustomButton";
 const UsernameForm = () => {
   const [username, setUsername] = useState("");
   const navigate = useNavigate();
@@ -41,13 +41,8 @@ const UsernameForm = () => {
           onChange={(e) => setUsername(e.target.value)}
           className="w-full p-2 mb-4 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-          
-        <button
-          type="submit"
-          className="w-full hover:bg-customGreen bg-blue-600 text-white font-bold py-2 px-4 rounded"
-        >
-          Submit
-        </button>
+        <CustomButton label="Submit" onClick={handleSubmit} className="w-full hover:bg-customGreen bg-blue-600 text-white font-bold py-2 px-4 rounded"/>
+
       </form>
       {/* <QuestionCard/> */}
     </div>

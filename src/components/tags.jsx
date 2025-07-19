@@ -1,6 +1,7 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import CustomButton from "./CustomButton"; // Assuming Button is the CustomButton component
 
 export default function Tags({ username }) {
   const [selectedTag, setSelectedTag] = useState(null);
@@ -54,7 +55,7 @@ export default function Tags({ username }) {
 
   return (
     <Menu as="div" className="w-full p-4">
-      <MenuButton className="w-full text-left p-3 bg-gray-100 border-t border-gray-200 shadow-md rounded-md" >
+      <MenuButton className="w-full text-left p-3 bg-gray-100 border-t border-gray-200 shadow-md rounded-md">
         {selectedTag ? selectedTag : `Select Question Tag `}
       </MenuButton>
       <MenuItems className="w-full bg-white shadow-md max-h-60 overflow-y-auto pb-10">
@@ -69,13 +70,12 @@ export default function Tags({ username }) {
           </MenuItem>
         ))}
       </MenuItems>
-      <button
-        className="mt-4 w-full hover:bg-customGreen text-white p-2 rounded bg-blue-600"
+      <CustomButton
+        label="Apply"
         onClick={handleApply}
+        className="mt-4 w-full hover:bg-customGreen text-white p-2 rounded bg-blue-600"
         disabled={!selectedTag}
-      >
-        Apply
-      </button>
+      />
     </Menu>
   );
 }

@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import CustomButton from "../components/CustomButton"; 
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -66,12 +67,11 @@ const HomePage = () => {
           </div>
 
           <div className="px-5 pb-3 text-center">
-            <button
-              className="hover:bg-customGreen bg-blue-600 text-white font-bold py-2 px-4 rounded"
+            <CustomButton
+              label="Proceed →"
               onClick={handleButtonClick}
-            >
-              Proceed &rarr;
-            </button>
+              className="hover:bg-customGreen bg-blue-600 text-white font-bold py-2 px-4 rounded"
+            />
           </div>
         </div>
       </div>

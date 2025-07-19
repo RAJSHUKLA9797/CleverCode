@@ -1,22 +1,23 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Chart from "chart.js/auto";
-import ProblemCard from "./problemcard";
-import Loader from "./loader";
-import Navbar from "./navbar";
+import ProblemCard from "../components/problemcard";
+import Loader from "../components/loader";
+import Navbar from "../components/navbar";
 
 const Wrapped = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { username } = location.state || {};
+  const { handle } = useParams();
   const [userInfo, setUserInfo] = useState(null);
   const [problemStats, setProblemStats] = useState(null);
   const [error, setError] = useState(null);
   const [year, setYear] = useState(new Date().getFullYear());
 
   useEffect(() => {
-    if (!username) {
-      setError("Username not provided. Redirecting...");
+    if (!handle) {
+      setError("handle not provided. Redirecting...");
       setTimeout(() => navigate("/user"), 2000);
       return;
     }
@@ -25,7 +26,7 @@ const Wrapped = () => {
       try {
         // Fetch User Info
         const userResponse = await fetch(
-          `https://codeforces.com/api/user.info?handles=${username}`
+          `https://codeforces.com/api/user.info?handles=${handle}`
         );
         const userData = await userResponse.json();
 
@@ -36,7 +37,7 @@ const Wrapped = () => {
         }
 
         const problemResponse = await fetch(
-          `https://codeforces.com/api/user.status?handle=${username}&from=1&count=10000`
+          `https://codeforces.com/api/user.status?handle=${handle}&from=1&count=10000`
         );
         const problemData = await problemResponse.json();
 
@@ -98,7 +99,7 @@ const Wrapped = () => {
     };
 
     fetchUserData();
-  }, [username, year, navigate]);
+  }, [handle, year, navigate]);
 
   useEffect(() => {
     let chartInstance = null;
@@ -163,7 +164,7 @@ const Wrapped = () => {
       <Navbar />
       <div style={{ padding: "20px" }}>
         <h1 style={{ textAlign: "center", marginBottom: "20px" }}>
-          {`${username}'s ${year} Wrapped`}
+          {`${handle}'s ${year} Wrapped`}
         </h1>
 
         <div style={{ textAlign: "center", marginBottom: "20px" }}>
@@ -273,6 +274,7 @@ const Wrapped = () => {
               difficulty={problem.difficulty || "Unrated"}
               tags={problem.tags}
               url={problem.url}
+              isSolvedByMe={true}
             />
           ))}
         </div>

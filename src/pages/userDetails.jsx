@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import Tags from "./tags";
-import { UserProfileColor } from "./UserProfileColor";
-import Loader from "./loader";
-
+import Tags from "../components/tags";
+import { UserProfileColor } from "../components/userProfileColor";
+import Loader from "../components/loader";
+import CustomButton from "../components/CustomButton";
 const UserDetails = () => {
   const { username } = useParams();
   const navigate = useNavigate();
@@ -50,9 +50,7 @@ const UserDetails = () => {
     fetchUserDetails();
   }, [username, navigate]);
 
-  const handleYearWrapped = () => {
-    navigate("/wrapped", { state: { username } });
-  };
+ 
 
   if (loading) {
     return <Loader />;
@@ -126,18 +124,16 @@ const UserDetails = () => {
 
       <Tags username={username} />
       <div className="text-center mt-1">
-        <button
-          className="px-4 py-2 m-2 hover:bg-customGreen bg-blue-600 text-white rounded"
+        {/* <CustomButton
+          label="Year Wrapped"
           onClick={handleYearWrapped}
-        >
-          Year Wrapped
-        </button>
-        <button
           className="px-4 py-2 m-2 hover:bg-customGreen bg-blue-600 text-white rounded"
-          onClick={() => navigate(`/user/${username}/recommendations`)}
-        >
-          Performance 
-        </button>
+        /> */}
+        <CustomButton
+          label="Performance"
+          onClick={() => navigate(`/user/${username}/topic-mastery`)}
+          className="px-4 py-2 m-2 hover:bg-customGreen bg-blue-600 text-white rounded"
+        />
       </div>
     </div>
   );
