@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Tags from "../components/Tags";
-import { UserProfileColor } from "../components/userProfileColor";
+import { UserProfileColor } from "../components/UserProfileColor";
 import Loader from "../components/Loader";
 import CustomButton from "../components/CustomButton";
 const UserDetails = () => {
