@@ -11,21 +11,37 @@ const SmartRecommendations = () => {
     const [error, setError] = useState(null);
     const [userRating, setUserRating] = useState(1200);
     const [difficultyRange, setDifficultyRange] = useState([]);
-    const [suggestedCount, setSuggestedCount] = useState([10]);
+    const [suggestedCount, setSuggestedCount] = useState([10]); // remove array
     const [selectedTags, setSelectedTags] = useState([]);
 
 
-//   console.log(handle);
-  useEffect(() =>async () => {
-        const userRes = await axios.get(
-          `https://codeforces.com/api/user.info?handles=${handle}`
-        );
-        const rating = userRes.data.result[0].rating || 1200;
-        let mul= Math.floor(rating/100);
-       const nrating= 100*mul;
-        setUserRating(nrating);
-        setDifficultyRange([Math.max(nrating - 200, 800), Math.min(nrating + 200, 4500)]);
-  }, [handle]);
+    useEffect(() => {
+      const fetchUserRating = async () => {
+        try {
+          const userRes = await axios.get(
+            `https://codeforces.com/api/user.info?handles=${handle}`
+          );
+          const rating = userRes.data.result[0].rating || 1200;
+          const mul = Math.floor(rating / 100);
+          const nrating = 100 * mul;
+
+          setUserRating(nrating);
+          setDifficultyRange([
+            Math.max(nrating - 200, 800),
+            Math.min(nrating + 200, 4500),
+          ]);
+        } catch (error) {
+          console.error("Failed to fetch user rating:", error);
+          setUserRating(1200);
+          setDifficultyRange([1000, 1400]); // fallback range
+        }
+      };
+
+      if (handle) {
+        fetchUserRating();
+      }
+    }, [handle]);
+
 
   useEffect(() => {
     const fetchData = async () => {
