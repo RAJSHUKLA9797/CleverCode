@@ -10,7 +10,7 @@ const SmartRecommendations = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [userRating, setUserRating] = useState(1200);
-    const [difficultyRange, setDifficultyRange] = useState([1200, 1500]);
+    const [difficultyRange, setDifficultyRange] = useState([]);
     const [suggestedCount, setSuggestedCount] = useState([10]);
     const [selectedTags, setSelectedTags] = useState([]);
 
