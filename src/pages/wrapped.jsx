@@ -2,9 +2,9 @@ import React, { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import Chart from "chart.js/auto";
-import ProblemCard from "../components/problemcard";
-import Loader from "../components/loader";
-import Navbar from "../components/navbar";
+import ProblemCard from "../components/Problemcard";
+import Loader from "../components/Loader";
+import Navbar from "../components/Navbar";
 
 const Wrapped = () => {
   const location = useLocation();

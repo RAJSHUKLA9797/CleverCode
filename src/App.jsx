@@ -1,11 +1,11 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 // import HomePage from "./HomePage";
-import HomePage from "./pages/homePage"
-import UsernameForm from "./pages/userNameForm";
-import UserDetails from "./pages/userDetails";
-import Problems from "./pages/problems";
-import Wrapped from "./pages/wrapped";
+import HomePage from "./pages/HomePage"
+import UsernameForm from "./pages/UserNameForm";
+import UserDetails from "./pages/UserDetails";
+import Problems from "./pages/Problems";
+import Wrapped from "./pages/Wrapped";
 import SmartRecommendations from "./pages/SmartRecommendations";
 import TopicMastery from "./pages/TopicMastery";
 function App() {

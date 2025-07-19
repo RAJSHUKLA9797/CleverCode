@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import Tags from "../components/tags";
+import Tags from "../components/Tags";
 import { UserProfileColor } from "../components/userProfileColor";
-import Loader from "../components/loader";
+import Loader from "../components/Loader";
 import CustomButton from "../components/CustomButton";
 const UserDetails = () => {
   const { username } = useParams();

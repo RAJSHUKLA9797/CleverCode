@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import ProblemCard from "../components/problemcard"; // Adjust the import path as necessary 
+import ProblemCard from "../components/Problemcard"; // Adjust the import path as necessary 
 import { use } from "react";
 
 const SmartRecommendations = () => {
