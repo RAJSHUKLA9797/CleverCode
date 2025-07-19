@@ -2,7 +2,7 @@
 import React from "react";
 
 export function UserProfileColor(rank) {
-  switch (rank.toLowerCase()) {
+  switch (rank?.toLowerCase()) {
     case "newbie":
       return "text-gray-700"; // Gray for "newbie"
     case "pupil":

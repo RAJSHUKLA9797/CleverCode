@@ -138,5 +138,4 @@ const UserDetails = () => {
     </div>
   );
 };
-
 export default UserDetails;
