@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import CustomButton from "../components/CustomButton";
 import { useNavigate } from "react-router-dom";
+import ErrorPatternDetector from "../components/ErrorPatternDetector";
 import {
   BarChart,
   Bar,
@@ -111,7 +112,7 @@ const TopicMastery = () => {
 
   return (
     <div className="p-4 max-w-7xl mx-auto">
-      <div className="flex flex-col md:flex-row justify-center items-center gap-6 mb-6">
+      <div className="flex flex-col md:flex-row justify-center items-center  gap-6 mb-6">
         <div className="bg-green-100 border border-green-400 text-green-800 px-6 py-4 rounded-lg shadow text-center">
           <div className="text-3xl font-bold">{totalSolvedProblems}</div>
           <div className="text-lg">Problems Solved</div>
@@ -121,7 +122,7 @@ const TopicMastery = () => {
           <div className="text-lg">Problems Attempted</div>
         </div>
       </div>
-      <div className="flex justify-center mb-6">
+      <div className="flex justify-center  mb-6">
         <CustomButton
           label="Recommended Problems"
           onClick={() => navigate(`/user/${handle}/recommendations`)}
@@ -133,11 +134,11 @@ const TopicMastery = () => {
           className="px-4 py-2 m-2 hover:bg-customGreen bg-blue-600 text-white rounded"
         />
       </div>
-      <h2 className="text-2xl font-bold text-center mb-6 text-indigo-700">
+      <h2 className="text-2xl font-bold text-center mb-6  text-indigo-700">
         📊 Topic Mastery Chart for <span className="text-black">{handle}</span>
       </h2>
 
-      <ResponsiveContainer width="100%" height={450}>
+      <ResponsiveContainer width="100%" height={450} >
         <BarChart
           data={tagStats}
           margin={{ top: 10, right: 30, left: 10, bottom: 100 }}
@@ -166,6 +167,7 @@ const TopicMastery = () => {
           </Bar>
         </BarChart>
       </ResponsiveContainer>
+      <ErrorPatternDetector handle={handle} />
     </div>
   );
 };

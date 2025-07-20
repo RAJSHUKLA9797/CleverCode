@@ -8,6 +8,7 @@ import Problems from "./pages/Problems";
 import Wrapped from "./pages/Wrapped";
 import SmartRecommendations from "./pages/SmartRecommendations";
 import TopicMastery from "./pages/TopicMastery";
+import ErrorPatternDetector from "./components/ErrorPatternDetector";
 function App() {
   return (
     <Router>
