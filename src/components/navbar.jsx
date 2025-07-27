@@ -20,7 +20,7 @@ const Navbar = ({ onCompare }) => {
         boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
       }}
     >
-      <div className="text-lg font-semibold hidden md:block">
+      <div className="text-lg font-semibold hidden md:block mx-16">
         Codeforces Analyzer
       </div>
 
