@@ -118,7 +118,7 @@ const SmartRecommendations = () => {
   }, [handle, difficultyRange, suggestedCount, selectedTags]);
 
   return (
-    <div className="mx-auto p-6 font-sans text-gray-800 dark:text-gray-200">
+    <div className="mx-auto p-12 font-sans text-gray-800 dark:text-gray-200">
       <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4 gap-2 mb-6">
         <label className="text-base font-medium text-gray-700 dark:text-blue-500">
           Difficulty Range:
