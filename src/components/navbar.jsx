@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ThemeToggle from "./ThemeToggle";
 
 const Navbar = ({ onCompare }) => {
   const [myUsername, setMyUsername] = useState("");
@@ -21,10 +20,6 @@ const Navbar = ({ onCompare }) => {
         boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
       }}
     >
-      {/* Theme Toggle Button */}
-      <ThemeToggle />
-
-      {/* Header Title */}
       <div className="text-lg font-semibold hidden md:block">
         Codeforces Analyzer
       </div>

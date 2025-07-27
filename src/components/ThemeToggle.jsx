@@ -1,6 +1,6 @@
 // src/components/ThemeToggle.jsx
 import React from "react";
-import useTheme from "../context/theme";
+import useTheme from "../context/Theme.jsx";
 
 export default function ThemeToggle() {
   const { themeMode, lightTheme, darkTheme } = useTheme();
