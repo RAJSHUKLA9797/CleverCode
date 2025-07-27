@@ -19,8 +19,8 @@ const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length > 0) {
     const data = payload[0].payload;
     return (
-      <div className="bg-white border border-gray-300 p-3 rounded-lg shadow-md text-sm">
-        <p className="font-bold text-indigo-600">{label}</p>
+      <div className="bg-white border border-gray-300 p-3 rounded-lg shadow-md text-sm dark:text-gray-200 dark:bg-gray-800">
+        <p className="font-bold text-indigo-600 dark:text-indigo-400">{label}</p>
         <p>✅ Solved: {data.solved}</p>
         <p>📝 Attempted: {data.attempted}</p>
         <p>🎯 Accuracy: {data.accuracy}%</p>

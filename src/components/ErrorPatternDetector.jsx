@@ -23,6 +23,25 @@ const emojiMap = {
   Other: "❓",
   Unknown: "❓",
 };
+const CustomTooltip = ({ active, payload, label }) => {
+  if (!active || !payload || !payload.length) return null;
+
+  const getLabelWithEmoji = (label) => {
+    return `🔍 ${label}`;
+  };
+
+  return (
+    <div className="bg-white border border-gray-300 p-3 rounded-lg shadow-md text-sm dark:text-gray-200 dark:bg-gray-800">
+      <p className="font-bold text-indigo-600 dark:text-indigo-400">{getLabelWithEmoji(label)}</p>
+      {payload.map((entry, index) => (
+        <p key={`item-${index}`} className=" m-0">
+          ❌ {entry.value} times <span >({entry.name})</span>
+        </p>
+      ))}
+    </div>
+  );
+  return null;
+};
 
 const getLabelWithEmoji = (label) => `${emojiMap[label] || ""} ${label}`;
 
@@ -129,25 +148,10 @@ const ErrorPatternDetector = ({ handle }) => {
               tick={{ fill: "#f97316", fontSize: 14 }}
             />
 
-            <Tooltip
-              contentStyle={{
-                backgroundColor: "#f1f5f9",
-                border: "1px solid #cbd5e1",
-                color: "#0f172a",
-                fontSize: "14px",
-              }}
-              formatter={(value) => [`❌ ${value} times`, "Mistake Count"]}
-              labelFormatter={(label) => getLabelWithEmoji(label)}
-            />
+            <Tooltip content={<CustomTooltip />} />
             <Bar
               dataKey="count"
               radius={[6, 6, 0, 0]}
-              label={{
-                position: "top",
-                fill: "#334155",
-                fontSize: 14,
-                fontWeight: 500,
-              }}
             >
               {errorStats.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={getBarColor(entry.count)} />
