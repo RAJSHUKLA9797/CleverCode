@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
 import {
   BarChart,
   Bar,
@@ -59,8 +58,6 @@ const ErrorPatternDetector = ({ handle }) => {
   const [errorStats, setErrorStats] = useState([]);
   const [loading, setLoading] = useState(true);
 
-//   const { handle } = useParams();
-
   useEffect(() => {
     const fetchSubmissions = async () => {
       try {
@@ -95,15 +92,15 @@ const ErrorPatternDetector = ({ handle }) => {
   }, [handle]);
 
   return (
-    <div className="p-6 bg-white text-gray-900 rounded-2xl mt-8 w-full max-w-4xl mx-auto">
-      <h2 className="text-3xl font-semibold mb-6 text-sky-600"></h2>
-      <h2 className="text-2xl font-bold text-center mb-6 text-indigo-700">
-        ❌ Error Pattern Detection <span className="text-black">{handle}</span>
+    <div className="p-6 bg-white text-gray-900 dark:bg-gray-900 dark:text-white rounded-2xl mt-8 w-full max-w-4xl mx-auto">
+      <h2 className="text-2xl font-bold text-center mb-6 text-indigo-700 dark:text-indigo-400">
+        ❌ Error Pattern Detection <span className="text-black dark:text-white">{handle}</span>
       </h2>
+
       {loading ? (
-        <p className="text-gray-600 text-lg">Loading...</p>
+        <p className="text-gray-600 dark:text-white text-lg">Loading...</p>
       ) : errorStats.length === 0 ? (
-        <p className="text-green-600 text-lg">
+        <p className="text-green-600 dark:text-green-400 text-lg">
           No errors detected. Great job! 🎉
         </p>
       ) : (
@@ -113,11 +110,14 @@ const ErrorPatternDetector = ({ handle }) => {
             margin={{ top: 10, right: 30, left: 20, bottom: 100 }}
             barCategoryGap={10}
           >
-            <CartesianGrid stroke="#e2e8f0" strokeDasharray="3 3" />
+            <CartesianGrid
+              strokeDasharray="3 3"
+              stroke="#e2e8f0"
+            />
             <XAxis
               dataKey="type"
               type="category"
-              tick={{ fill: "#0f172a", fontSize: 14 }}
+              tick={{ fill: "#f97316", fontSize: 14 }}
               tickFormatter={getLabelWithEmoji}
               angle={-30}
               textAnchor="end"
@@ -125,9 +125,10 @@ const ErrorPatternDetector = ({ handle }) => {
             />
             <YAxis
               type="number"
-              stroke="#334155"
-              tick={{ fill: "#334155", fontSize: 14 }}
+              stroke="#f97316"
+              tick={{ fill: "#f97316", fontSize: 14 }}
             />
+
             <Tooltip
               contentStyle={{
                 backgroundColor: "#f1f5f9",
@@ -160,3 +161,6 @@ const ErrorPatternDetector = ({ handle }) => {
 };
 
 export default ErrorPatternDetector;
+
+
+// #3b82f6

@@ -5,6 +5,7 @@ import Tags from "../components/Tags";
 import { UserProfileColor } from "../components/UserProfileColor";
 import Loader from "../components/Loader";
 import CustomButton from "../components/CustomButton";
+
 const UserDetails = () => {
   const { username } = useParams();
   const navigate = useNavigate();
@@ -50,15 +51,13 @@ const UserDetails = () => {
     fetchUserDetails();
   }, [username, navigate]);
 
- 
-
   if (loading) {
     return <Loader />;
   }
 
   if (error) {
     return (
-      <div className="flex items-center justify-center min-h-screen text-red-500">
+      <div className="flex items-center justify-center min-h-screen text-red-500 dark:text-red-400">
         {error} - Redirecting...
       </div>
     );
@@ -66,7 +65,7 @@ const UserDetails = () => {
 
   if (!userDetails) {
     return (
-      <div className="flex items-center justify-center min-h-screen text-red-500">
+      <div className="flex items-center justify-center min-h-screen text-red-500 dark:text-red-400">
         User details not found.
       </div>
     );
@@ -77,65 +76,69 @@ const UserDetails = () => {
   }`.trim();
 
   return (
-    <div className="max-w-sm mx-auto bg-white shadow-lg rounded-lg overflow-hidden m-20">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900">
+    <div className="max-w-sm w-full mx-auto bg-white dark:bg-gray-800 text-black dark:text-white shadow-lg rounded-lg overflow-hidden m-4">
       <img
-        src="https://repository-images.githubusercontent.com/390296311/0f6c1240-462e-47ff-870d-e2d0ebb181f1"
-        alt="Rectangular Image"
-        className="w-full h-16 object-cover"
+        className="w-80 h-16 object-contain mx-7"
+        src="https://user-images.githubusercontent.com/49322948/159158565-ded8dc03-6676-496d-8496-1f9d05f3fb58.png"
+        alt="Rectangular Header"
       />
 
       <div className="mt-2 flex justify-center">
         <img
           src={userDetails.avatar}
-          alt="Circular Image"
-          className="w-24 h-24 object-cover rounded-full border-4 border-white shadow-lg"
+          alt="User Avatar"
+          className="w-24 h-24 object-cover rounded-full border-4 border-white dark:border-gray-700 shadow-lg"
         />
       </div>
+
       <div className="flex flex-col justify-center items-center">
         <h3 className="text-lg font-medium underline">{fullName}</h3>
         <h1 className={UserProfileColor(userDetails.rank)}>
           {userDetails.rank}
         </h1>
       </div>
+
       <div className="flex flex-col justify-center items-center mt-2">
         <h3 className="text-sm font-light">
           {userDetails.organization}, {userDetails.country}
         </h3>
       </div>
+
       <div className="py-4">
-        <hr className="border-t border-gray-300 w-full" />
+        <hr className="border-t border-gray-300 dark:border-gray-600 w-full" />
       </div>
-      <div>
-        <div className="flex justify-between text-center px-4">
+
+      <div className="px-4">
+        <div className="flex justify-between text-center">
           <div>
             <h3 className="text-lg font-medium">Rating</h3>
-            <p className="text-gray-600">{userDetails.rating}</p>
+            <p className="text-gray-600 dark:text-gray-300">{userDetails.rating}</p>
           </div>
           <div>
             <h3 className="text-lg font-medium">Max Rating</h3>
-            <p className="text-gray-600">{userDetails.maxRating}</p>
+            <p className="text-gray-600 dark:text-gray-300">{userDetails.maxRating}</p>
           </div>
           <div>
             <h3 className="text-lg font-medium">Problems</h3>
-            <p className="text-gray-600">{solvedCount}</p>
+            <p className="text-gray-600 dark:text-gray-300">{solvedCount}</p>
           </div>
         </div>
       </div>
 
       <Tags username={username} />
+
       <div className="text-center mt-1">
-        {/* <CustomButton
-          label="Year Wrapped"
-          onClick={handleYearWrapped}
-          className="px-4 py-2 m-2 hover:bg-customGreen bg-blue-600 text-white rounded"
-        /> */}
         <CustomButton
           label="Performance"
           onClick={() => navigate(`/user/${username}/topic-mastery`)}
-          className="px-4 py-2 m-2 hover:bg-customGreen bg-blue-600 text-white rounded"
+          className="px-4 py-2 m-2 hover:bg-customGreen bg-blue-600 text-white rounded dark:bg-blue-700 dark:hover:bg-green-600"
         />
       </div>
+
+    </div>
     </div>
   );
 };
+
 export default UserDetails;

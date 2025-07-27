@@ -1,7 +1,7 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import CustomButton from "./CustomButton"; // Assuming Button is the CustomButton component
+import CustomButton from "./CustomButton";
 
 export default function Tags({ username }) {
   const [selectedTag, setSelectedTag] = useState(null);
@@ -55,14 +55,15 @@ export default function Tags({ username }) {
 
   return (
     <Menu as="div" className="w-full p-4">
-      <MenuButton className="w-full text-left p-3 bg-gray-100 border-t border-gray-200 shadow-md rounded-md">
-        {selectedTag ? selectedTag : `Select Question Tag `}
+      <MenuButton className="w-full text-left p-3 bg-gray-100 dark:bg-gray-800 dark:text-white border border-gray-200 dark:border-gray-300 shadow-md rounded-md">
+        {selectedTag ? selectedTag : `Select Question Tag`}
       </MenuButton>
-      <MenuItems className="w-full bg-white shadow-md max-h-60 overflow-y-auto pb-10">
+
+      <MenuItems className="w-full bg-white dark:bg-gray-900 shadow-2xl max-h-60 overflow-y-auto pb-10">
         {alltags.map((tag, index) => (
           <MenuItem key={index}>
             <button
-              className="block w-full px-4 py-2 text-left hover:bg-blue-200 font-light"
+              className="block w-full px-4 py-2 text-left hover:bg-blue-200 dark:hover:bg-blue-700 text-black dark:text-white font-light"
               onClick={() => setSelectedTag(tag)}
             >
               {tag}
@@ -70,10 +71,11 @@ export default function Tags({ username }) {
           </MenuItem>
         ))}
       </MenuItems>
+
       <CustomButton
         label="Apply"
         onClick={handleApply}
-        className="mt-4 w-full hover:bg-customGreen text-white p-2 rounded bg-blue-600"
+        className="mt-4 w-full bg-blue-600 hover:bg-customGreen text-white p-2 rounded dark:bg-blue-700"
         disabled={!selectedTag}
       />
     </Menu>

@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import CustomButton from "../components/CustomButton";
-import { useNavigate } from "react-router-dom";
 import ErrorPatternDetector from "../components/ErrorPatternDetector";
 import {
   BarChart,
@@ -15,8 +14,6 @@ import {
   Legend,
   Cell,
 } from "recharts";
-
-
 
 const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length > 0) {
@@ -45,12 +42,9 @@ const TopicMastery = () => {
   const { handle } = useParams();
   const navigate = useNavigate();
   const [tagStats, setTagStats] = useState([]);
-  const isMobile = window.innerWidth < 768;
   const [problemAttempted, setProblemAttempted] = useState(0);
   const [totalSolvedProblems, setTotalSolvedProblems] = useState(0);
-    // const handleYearWrapped = () => {
-    //   navigate("/wrapped", { state: { handle } });
-    // };
+  const isMobile = window.innerWidth < 768;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -69,27 +63,29 @@ const TopicMastery = () => {
         problems.forEach((p) => {
           problemMeta[`${p.contestId}-${p.index}`] = { tags: p.tags || [] };
         });
+
         setProblemAttempted(submissions.length);
-        
+
         const tagMap = {};
         const solvedSet = new Set();
+
         submissions.forEach((sub) => {
           const id = `${sub.problem.contestId}-${sub.problem.index}`;
           const meta = problemMeta[id];
           if (!meta) return;
-          
+
           meta.tags.forEach((tag) => {
             if (!tagMap[tag]) tagMap[tag] = { attempted: 0, solved: 0 };
             tagMap[tag].attempted++;
             if (sub.verdict === "OK") {
-              tagMap[tag].solved++
+              tagMap[tag].solved++;
               solvedSet.add(id);
-            };
+            }
           });
         });
+
         setTotalSolvedProblems(solvedSet.size);
-        // console.log(problemAttempted);
-        // console.log(totalSolvedProblems);
+
         const statsArray = Object.entries(tagMap).map(([tag, stats]) => ({
           tag,
           solved: stats.solved,
@@ -108,11 +104,11 @@ const TopicMastery = () => {
     };
 
     fetchData();
-  }, [handle,isMobile]);
+  }, [handle, isMobile]);
 
   return (
     <div className="p-4 max-w-7xl mx-auto">
-      <div className="flex flex-col md:flex-row justify-center items-center  gap-6 mb-6">
+      <div className="flex flex-col md:flex-row justify-center items-center gap-6 mb-6">
         <div className="bg-green-100 border border-green-400 text-green-800 px-6 py-4 rounded-lg shadow text-center">
           <div className="text-3xl font-bold">{totalSolvedProblems}</div>
           <div className="text-lg">Problems Solved</div>
@@ -122,7 +118,8 @@ const TopicMastery = () => {
           <div className="text-lg">Problems Attempted</div>
         </div>
       </div>
-      <div className="flex justify-center  mb-6">
+
+      <div className="flex justify-center mb-6">
         <CustomButton
           label="Recommended Problems"
           onClick={() => navigate(`/user/${handle}/recommendations`)}
@@ -134,11 +131,13 @@ const TopicMastery = () => {
           className="px-4 py-2 m-2 hover:bg-customGreen bg-blue-600 text-white rounded"
         />
       </div>
-      <h2 className="text-2xl font-bold text-center mb-6  text-indigo-700">
-        📊 Topic Mastery Chart for <span className="text-black">{handle}</span>
+
+      <h2 className="text-2xl font-bold text-center mb-6 text-indigo-700 dark:text-indigo-400">
+        📊 Topic Mastery Chart for{" "}
+        <span className="text-black dark:text-white">{handle}</span>
       </h2>
 
-      <ResponsiveContainer width="100%" height={450} >
+      <ResponsiveContainer width="100%" height={450}>
         <BarChart
           data={tagStats}
           margin={{ top: 10, right: 30, left: 10, bottom: 100 }}
@@ -150,9 +149,11 @@ const TopicMastery = () => {
             textAnchor="end"
             interval={0}
             height={120}
-            tick={{ fontSize: 12 }}
+            tick={{ fontSize: 14, fill: "#f97316" }}
           />
-          <YAxis domain={[0, 100]} tickFormatter={(v) => `${v}%`} />
+          <YAxis 
+          stroke="#f97316"
+          domain={[0, 100]} tickFormatter={(v) => `${v}%`} />
           <Tooltip content={<CustomTooltip />} />
           <Legend />
           <Bar
@@ -167,6 +168,7 @@ const TopicMastery = () => {
           </Bar>
         </BarChart>
       </ResponsiveContainer>
+
       <ErrorPatternDetector handle={handle} />
     </div>
   );

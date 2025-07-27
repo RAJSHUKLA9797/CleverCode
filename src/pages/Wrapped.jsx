@@ -24,7 +24,6 @@ const Wrapped = () => {
 
     const fetchUserData = async () => {
       try {
-        // Fetch User Info
         const userResponse = await fetch(
           `https://codeforces.com/api/user.info?handles=${handle}`
         );
@@ -142,17 +141,14 @@ const Wrapped = () => {
   }, [problemStats]);
 
   if (error) {
-    return <div style={{ color: "red", textAlign: "center" }}>{error}</div>;
+    return <div className="text-red-500 text-center">{error}</div>;
   }
 
   if (!userInfo || !problemStats) {
     return <Loader />;
   }
 
-  // Calculate start year for dropdown
-  const startYear = new Date(
-    userInfo.registrationTimeSeconds * 1000
-  ).getFullYear();
+  const startYear = new Date(userInfo.registrationTimeSeconds * 1000).getFullYear();
   const currentYear = new Date().getFullYear();
   const years = Array.from(
     { length: currentYear - startYear + 1 },
@@ -161,20 +157,20 @@ const Wrapped = () => {
 
   return (
     <>
-      <Navbar />
-      <div style={{ padding: "20px" }}>
-        <h1 style={{ textAlign: "center", marginBottom: "20px" }}>
+      <div className="p-6 bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-white min-h-screen">
+        <h1 className="text-3xl text-center mb-6">
           {`${handle}'s ${year} Wrapped`}
         </h1>
 
-        <div style={{ textAlign: "center", marginBottom: "20px" }}>
-          <label htmlFor="year-select" style={{ marginRight: "10px" }}>
+        <div className="text-center mb-6">
+          <label htmlFor="year-select" className="mr-2 font-semibold">
             Select Year:
           </label>
           <select
             id="year-select"
             value={year}
             onChange={(e) => setYear(Number(e.target.value))}
+            className="bg-white dark:bg-gray-800 text-gray-800 dark:text-white px-2 py-1 rounded"
           >
             {years.map((yr) => (
               <option key={yr} value={yr}>
@@ -184,66 +180,32 @@ const Wrapped = () => {
           </select>
         </div>
 
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-            gap: "20px",
-          }}
-        >
-          <div
-            style={{
-              background: "#f5f5f5",
-              borderRadius: "10px",
-              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-              padding: "20px",
-              textAlign: "center",
-            }}
-          >
-            <h2 className="text-lg font-bold" style={{ marginBottom: "20px" }}>
-              User Info
-            </h2>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                marginBottom: "15px",
-              }}
-            >
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 text-center">
+            <h2 className="text-xl font-semibold mb-4">User Info</h2>
+            <div className="flex justify-center mb-4">
               <img
                 src={userInfo.avatar}
                 alt="Profile"
-                style={{
-                  width: "200px",
-                  height: "200px",
-                  objectFit: "cover",
-                  borderRadius: "10px",
-                  boxShadow: "0 4px 10px rgba(0, 0, 0, 0.2)",
-                }}
+                className="w-48 h-48 object-cover rounded-lg shadow"
               />
             </div>
-            <div
-              className="flex justify-between text-center px-4"
-              style={{ marginBottom: "10px" }}
-            >
+            <div className="flex justify-between text-center mb-4 px-4">
               <div>
-                <h3 className="text-lg font-bold">Handle:</h3>
-                <p className="text-gray-600">{userInfo.handle}</p>
+                <h3 className="font-bold">Handle:</h3>
+                <p className="text-gray-700 dark:text-gray-300">{userInfo.handle}</p>
               </div>
-
               <div>
-                <h3 className="text-lg font-bold">Rank:</h3>
-                <p className="text-gray-600">{userInfo.rank}</p>
+                <h3 className="font-bold">Rank:</h3>
+                <p className="text-gray-700 dark:text-gray-300">{userInfo.rank}</p>
               </div>
-
               <div>
-                <h3 className="text-lg font-bold">Rating:</h3>
-                <p className="text-gray-600">{userInfo.rating}</p>
+                <h3 className="font-bold">Rating:</h3>
+                <p className="text-gray-700 dark:text-gray-300">{userInfo.rating}</p>
               </div>
             </div>
-            <p>
-              <strong>Max Rating:</strong> {userInfo.maxRating} (
-              {userInfo.maxRank})
+            <p className="mb-1">
+              <strong>Max Rating:</strong> {userInfo.maxRating} ({userInfo.maxRank})
             </p>
             <p>
               <strong>Total Problems Solved This Year:</strong>{" "}
@@ -251,22 +213,16 @@ const Wrapped = () => {
             </p>
           </div>
 
-          <div>
-            <h2>Top Tags This Year</h2>
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+            <h2 className="text-xl font-semibold mb-4">Top Tags This Year</h2>
             <canvas id="topTagsChart" />
           </div>
         </div>
 
-        <h2 style={{ textAlign: "center", marginTop: "30px" }}>
+        <h2 className="text-2xl font-semibold text-center mt-10 mb-4">
           Top Rated Problems Solved
         </h2>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-            gap: "20px",
-          }}
-        >
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {problemStats.topProblems.map((problem, index) => (
             <ProblemCard
               key={index}

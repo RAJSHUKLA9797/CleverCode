@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import CustomButton from "../components/CustomButton"; 
+import CustomButton from "../components/CustomButton";
+import ThemeToggle from "../components/ThemeToggle";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -9,27 +10,31 @@ const HomePage = () => {
   };
 
   return (
-    <div className="grid grid-cols-1 divide-y relative">
-      <div className="flex items-center justify-center min-h-screen bg-gray-100">
-        <div className="max-w-lg rounded overflow-hidden shadow-lg bg-white">
+    <>
+
+    <div className="grid grid-cols-1 divide-y relative dark:bg-gray-900 dark:text-white transition-colors duration-300">
+
+      
+      <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900">
+        <div className="max-w-lg rounded overflow-hidden shadow-lg bg-white dark:bg-gray-800 transition-colors duration-300">
           <img
-            className="w-full h-24 object-cover"
-            src="https://repository-images.githubusercontent.com/390296311/0f6c1240-462e-47ff-870d-e2d0ebb181f1"
-            alt="Sunset in the mountains"
+            className="mx-auto w-96 h-24 object-contain"
+            src="https://user-images.githubusercontent.com/49322948/159158565-ded8dc03-6676-496d-8496-1f9d05f3fb58.png"
+            alt="Banner"
           />
 
           <div className="px-6">
-            <hr className="border-t border-gray-300 w-full" />
+            <hr className="border-t border-gray-300 dark:border-gray-600 w-full" />
           </div>
 
           <div className="px-5 py-3">
-            <h1 className="text-center mb-3 text-2xl font-bold font-lato ">
-              {"<< "} “CleverCode” {" >>"}{" "}
+            <h1 className="text-center mb-3 text-2xl font-bold font-lato">
+              {"<< "} “CleverCode” {" >>"}
             </h1>
             <h1 className="text-center mb-3 text-xl font-bold">
               --- About CleverCode ---
             </h1>
-            <p className="text-gray-700 text-base text-center font-medium">
+            <p className="text-gray-700 dark:text-gray-300 text-base text-center font-medium">
               CleverCode is an indispensable tool developed to assist fellow
               coders who want to be better at competitive programming, have
               their Codeforces account set up and ready to use but don't have a
@@ -38,13 +43,14 @@ const HomePage = () => {
           </div>
 
           <div className="px-6">
-            <hr className="border-t border-gray-300 w-full" />
+            <hr className="border-t border-gray-300 dark:border-gray-600 w-full" />
           </div>
+
           <div className="px-5 py-3">
             <h1 className="text-center mb-3 text-xl font-bold">
               --- Steps to use ---
             </h1>
-            <ul className="text-gray-700 text-base text-left list-disc pl-4 font-medium">
+            <ul className="text-gray-700 dark:text-gray-300 text-base text-left list-disc pl-4 font-medium">
               <li className="mb-1">
                 Enter the Codeforces handle/username of the person you want to
                 view the solved problems of.
@@ -76,6 +82,7 @@ const HomePage = () => {
         </div>
       </div>
     </div>
+        </>
   );
 };
 
